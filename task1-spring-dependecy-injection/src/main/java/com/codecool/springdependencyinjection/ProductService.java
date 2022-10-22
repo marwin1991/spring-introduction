@@ -4,21 +4,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 @Service
 public class ProductService {
 
-    private final Product product = new Product(BigDecimal.valueOf(23.50));
-
     private final ProductDiscountApplier applier;
+    private final ProductRepository repository;
 
     @Autowired
-    public ProductService(ProductDiscountApplier applier) {
+    public ProductService(ProductDiscountApplier applier, ProductRepository repository) {
         this.applier = applier;
+        this.repository = repository;
     }
 
 //    @Autowired
@@ -26,11 +22,11 @@ public class ProductService {
 //        this.applier = applier;
 //    }
 
-    public Product getProductBeforeDiscount(){
-        return product;
+    public Product getProductBeforeDiscount(long id){
+        return repository.getProduct(id);
     }
 
-    public Product getProductAfterDiscount(){
-        return applier.applyDiscount(product);
+    public Product getProductAfterDiscount(long id){
+        return applier.applyDiscount(getProductBeforeDiscount(id));
     }
 }

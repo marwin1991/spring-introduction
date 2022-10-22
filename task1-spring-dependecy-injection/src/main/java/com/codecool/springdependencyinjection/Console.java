@@ -18,11 +18,11 @@ public class Console {
     @PostConstruct
     public void printToConsole(){
         System.out.println("Before discount");
-        Product product = productService.getProductBeforeDiscount();
+        Product product = productService.getProductBeforeDiscount(1);
         System.out.println(product.getPrice());
 
         System.out.println("After discount");
-        product = productService.getProductAfterDiscount();
+        product = productService.getProductAfterDiscount(1);
         System.out.println(product.getPrice());
     }
 }

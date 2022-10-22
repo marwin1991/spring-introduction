@@ -1,7 +1,6 @@
 package com.codecool.springdependencyinjection;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
 
@@ -12,11 +11,11 @@ class ProductServiceTest {
     @Test
     void test(){
         //given:
-        ProductService productService = new ProductService(new ProductDiscountApplier());
-        BigDecimal priceBeforeDiscount = productService.getProductBeforeDiscount().getPrice();
+        ProductService productService = new ProductService(new ProductDiscountApplier(), new ProductRepository());
+        BigDecimal priceBeforeDiscount = productService.getProductBeforeDiscount(1).getPrice();
 
         //when:
-        Product productAfterDiscount = productService.getProductAfterDiscount();
+        Product productAfterDiscount = productService.getProductAfterDiscount(1);
 
         //then:
         assertTrue(productAfterDiscount.getPrice().compareTo(priceBeforeDiscount) < 0);
