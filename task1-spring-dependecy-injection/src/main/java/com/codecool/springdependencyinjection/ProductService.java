@@ -1,5 +1,6 @@
 package com.codecool.springdependencyinjection;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -13,13 +14,23 @@ public class ProductService {
 
     private final Product product = new Product(BigDecimal.valueOf(23.50));
 
+    private final ProductDiscountApplier applier;
+
+    @Autowired
+    public ProductService(ProductDiscountApplier applier) {
+        this.applier = applier;
+    }
+
+//    @Autowired
+//    public void setApplier(ProductDiscountApplier applier) {
+//        this.applier = applier;
+//    }
+
     public Product getProductBeforeDiscount(){
         return product;
     }
 
     public Product getProductAfterDiscount(){
-        //apply discount here
-
-        throw new IllegalArgumentException("Not Implemented Yet!!!");
+        return applier.applyDiscount(product);
     }
 }
